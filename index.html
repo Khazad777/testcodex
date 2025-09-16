@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Workshops IA – Renaud Dékode</title>
+    <meta
+      name="description"
+      content="Formulaire d'inscription et d'organisation des workshops collaboratifs Renaud Dékode autour de l'intelligence artificielle."
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo-wrapper">
+        <img src="assets/logo.svg" alt="Logo Renaud Dékode" />
+      </div>
+      <div class="header-copy">
+        <p class="eyebrow">Workshops IA collaboratifs</p>
+        <h1>Préparez votre workshop Renaud Dékode</h1>
+        <p>
+          Pour fluidifier les échanges, chaque participant précise ses attentes et ce qu'il peut offrir aux autres. Remplissez le formulaire, validez, puis ajustez vos informations si besoin avant le jour J.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section id="form-section" class="card">
+        <h2>Partagez votre intention</h2>
+        <p class="section-intro">
+          Complétez ce formulaire pour que la communauté puisse anticiper vos besoins et vos forces. Tous les champs sont requis, sauf le commentaire.
+        </p>
+        <form id="participant-form" novalidate>
+          <div class="form-grid">
+            <label class="form-field">
+              <span>Votre nom complet</span>
+              <input type="text" id="name" name="name" placeholder="Prénom Nom" autocomplete="name" required />
+              <small class="field-hint">Utilisé pour vous identifier dans les salles.</small>
+            </label>
+            <label class="form-field">
+              <span>Choisissez votre salle</span>
+              <select id="room" name="room" required>
+                <option value="">Sélectionnez une salle</option>
+                <option value="salle1">Salle 1 - Créer des visuels avec l’IA</option>
+                <option value="salle2">Salle 2 - Créer des vidéos, podcasts et musiques avec l’IA</option>
+                <option value="salle3">Salle 3 - Développement IA, code et projets open source</option>
+                <option value="salle4">Salle 4 - Automatiser : agents IA, workflows, assistants</option>
+                <option value="salle5">Salle 5 - IA et business : IA en entreprise et entreprise IA</option>
+                <option value="salle6">Salle 6 - Réflexion critique et éthique autour de l’IA</option>
+                <option value="salle7">Salle 7 - ChatGPT et autres assistants : usages quotidiens et pro</option>
+              </select>
+              <small class="field-hint">Vous pourrez changer de salle après validation.</small>
+            </label>
+            <label class="form-field full-width">
+              <span>Votre problématique</span>
+              <textarea id="challenge" name="challenge" rows="3" placeholder="Décrivez la question ou le blocage que vous souhaitez traiter." required></textarea>
+            </label>
+            <label class="form-field full-width">
+              <span>Ce que vous pouvez apporter aux autres</span>
+              <textarea id="value" name="value" rows="3" placeholder="Compétences, ressources, expériences…" required></textarea>
+            </label>
+            <label class="form-field full-width">
+              <span>Commentaire libre (optionnel)</span>
+              <textarea id="comment" name="comment" rows="3" placeholder="Besoin technique, lien vers ressource, etc."></textarea>
+            </label>
+          </div>
+          <div class="form-actions">
+            <p class="form-feedback" id="form-feedback" role="alert" aria-live="assertive"></p>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Valider ma participation</button>
+            <button type="button" class="btn btn-secondary" id="cancel-edit-btn" hidden>Annuler</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="review-section" class="card hidden" aria-live="polite">
+        <div class="review-header">
+          <div>
+            <h2>Votre participation est enregistrée</h2>
+            <p id="review-message">Vous pouvez mettre à jour vos informations avant le workshop.</p>
+          </div>
+          <div class="review-actions">
+            <button type="button" class="btn btn-secondary" id="edit-btn">Modifier</button>
+            <button type="button" class="btn btn-link" id="new-entry-btn">Nouvelle participation</button>
+          </div>
+        </div>
+        <dl class="summary" id="summary">
+          <div>
+            <dt>Participant·e</dt>
+            <dd id="summary-name"></dd>
+          </div>
+          <div>
+            <dt>Salle choisie</dt>
+            <dd id="summary-room"></dd>
+          </div>
+          <div>
+            <dt>Problématique</dt>
+            <dd id="summary-challenge"></dd>
+          </div>
+          <div>
+            <dt>Contribution</dt>
+            <dd id="summary-value"></dd>
+          </div>
+          <div>
+            <dt>Commentaire</dt>
+            <dd id="summary-comment"></dd>
+          </div>
+        </dl>
+        <section class="rooms-overview" aria-labelledby="rooms-title">
+          <div class="rooms-header">
+            <h3 id="rooms-title">Vue d'ensemble des salles</h3>
+            <p>Suivez les problématiques de chaque salle et cochez celles qui ont été traitées.</p>
+          </div>
+          <div id="rooms-container" class="rooms-grid" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Besoin d'ajuster l'organisation des salles ? Contactez l'équipe Renaud Dékode ou soumettez une nouvelle participation.
+      </p>
+    </footer>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
