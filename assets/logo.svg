@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 240" role="img" aria-labelledby="title desc">
+  <title id="title">Renaud Dékode logo</title>
+  <desc id="desc">Logotype for Renaud Dékode with black background, white lettering and a purple to red accent.</desc>
+  <defs>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4429ff" />
+      <stop offset="50%" stop-color="#7648ff" />
+      <stop offset="100%" stop-color="#ff3d55" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="240" fill="#050505" rx="24" />
+  <g font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="700">
+    <text x="44" y="112" font-size="88" fill="#ffffff" letter-spacing="6">RENAUD</text>
+    <text x="44" y="190" font-size="88" fill="#ffffff" letter-spacing="6">DÉK</text>
+  </g>
+  <g transform="translate(352 126)">
+    <circle cx="64" cy="50" r="52" fill="url(#accentGradient)" />
+    <polygon points="54,20 54,80 92,50" fill="#ffffff" opacity="0.9" />
+  </g>
+  <g font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="700">
+    <text x="470" y="190" font-size="88" fill="#ffffff" letter-spacing="6">DE</text>
+  </g>
+  <g font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="500" font-size="28" fill="#ffffff" letter-spacing="3">
+    <text x="58" y="226">WEB · IA · PROCESS · IMPACTS</text>
+  </g>
+  <text x="58" y="66" font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="600" font-size="28" fill="#ffffff" letter-spacing="2">RENAUD</text>
+  <text x="330" y="226" font-family="'Montserrat', 'Helvetica Neue', Arial, sans-serif" font-weight="400" font-size="28" fill="#ffffff" letter-spacing="3">www.renaud-dekode.fr</text>
+</svg>
