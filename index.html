@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyseur de Texte - Compteur de Lettres</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -28,8 +29,41 @@
                     <span class="stat-label">Total de lettres:</span>
                     <span id="totalLetters" class="stat-value">0</span>
                 </div>
+                <div class="stat-item">
+                    <span class="stat-label">Majuscules:</span>
+                    <span id="totalUppercase" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Minuscules:</span>
+                    <span id="totalLowercase" class="stat-value">0</span>
+                </div>
             </div>
-            <div id="letterCounts" class="letter-counts"></div>
+
+            <div class="view-toggle">
+                <button id="cardsViewBtn" class="view-btn active" onclick="switchView('cards')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="3" y="3" width="7" height="7" rx="1"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1"/>
+                    </svg>
+                    Vue Cartes
+                </button>
+                <button id="chartViewBtn" class="view-btn" onclick="switchView('chart')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="12" r="10"/>
+                    </svg>
+                    Vue Camembert
+                </button>
+            </div>
+
+            <div id="cardsView" class="view-container">
+                <div id="letterCounts" class="letter-counts"></div>
+            </div>
+
+            <div id="chartView" class="view-container hidden">
+                <canvas id="letterChart"></canvas>
+            </div>
         </div>
     </div>
 

@@ -116,8 +116,9 @@ h2 {
 }
 
 .stats {
-    display: flex;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
     margin-bottom: 30px;
     padding: 20px;
     background: #f8f9fa;
@@ -181,6 +182,86 @@ h2 {
     color: #999;
 }
 
+/* Niveaux d'intensité de couleur */
+.letter-item.intensity-1 {
+    background: linear-gradient(135deg, #d4d9f7 0%, #e6d9f0 100%);
+    color: #333;
+}
+
+.letter-item.intensity-2 {
+    background: linear-gradient(135deg, #a8b3ed 0%, #c8b3e3 100%);
+    color: #333;
+}
+
+.letter-item.intensity-3 {
+    background: linear-gradient(135deg, #7d8de3 0%, #a98dd6 100%);
+    color: white;
+}
+
+.letter-item.intensity-4 {
+    background: linear-gradient(135deg, #5167d9 0%, #8b67c9 100%);
+    color: white;
+}
+
+.letter-item.intensity-5 {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+/* Boutons de switch de vue */
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.view-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: #f8f9fa;
+    color: #666;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.view-btn:hover {
+    background: #e9ecef;
+    border-color: #667eea;
+}
+
+.view-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.view-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Conteneurs de vue */
+.view-container {
+    animation: fadeIn 0.5s;
+}
+
+.view-container.hidden {
+    display: none;
+}
+
+#chartView {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 20px;
@@ -196,7 +277,21 @@ h2 {
     }
 
     .stats {
-        flex-direction: column;
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
+    }
+
+    .view-toggle {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .view-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #chartView {
+        padding: 10px;
     }
 }
