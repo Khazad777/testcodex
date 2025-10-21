@@ -20,15 +20,27 @@ function analyzeText() {
     let totalLetters = 0;
     let vowelCount = 0;
     let consonantCount = 0;
+    let uppercaseCount = 0;
+    let lowercaseCount = 0;
     const vowels = 'aeiouy';
     const normalizedText = text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
-    for (let char of normalizedText) {
-        if (alphabet.includes(char)) {
-            letterCounts[char]++;
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const normalizedChar = normalizedText[i];
+
+        if (alphabet.includes(normalizedChar)) {
+            letterCounts[normalizedChar]++;
             totalLetters++;
 
-            if (vowels.includes(char)) {
+            // Compter majuscules/minuscules
+            if (char === char.toUpperCase() && char !== char.toLowerCase()) {
+                uppercaseCount++;
+            } else if (char === char.toLowerCase() && char !== char.toUpperCase()) {
+                lowercaseCount++;
+            }
+
+            if (vowels.includes(normalizedChar)) {
                 vowelCount++;
             } else {
                 consonantCount++;
@@ -37,20 +49,22 @@ function analyzeText() {
     }
 
     // Afficher les résultats
-    displayResults(letterCounts, text.length, totalLetters, vowelCount, consonantCount, text);
+    displayResults(letterCounts, text.length, totalLetters, vowelCount, consonantCount, uppercaseCount, lowercaseCount, text);
 }
 
 let currentChart = null;
 let originalText = '';
 let selectedLetter = null;
 
-function displayResults(letterCounts, totalChars, totalLetters, vowelCount, consonantCount, text) {
+function displayResults(letterCounts, totalChars, totalLetters, vowelCount, consonantCount, uppercaseCount, lowercaseCount, text) {
     const resultsDiv = document.getElementById('results');
-    const letterCountsDiv = document.getElementById('letterCounts');
+    const letterCountsDiv = document.getElementById('cardsView');
     const totalCharsSpan = document.getElementById('totalChars');
     const totalLettersSpan = document.getElementById('totalLetters');
     const totalVowelsSpan = document.getElementById('totalVowels');
     const totalConsonantsSpan = document.getElementById('totalConsonants');
+    const totalUppercaseSpan = document.getElementById('totalUppercase');
+    const totalLowercaseSpan = document.getElementById('totalLowercase');
     const textInput = document.getElementById('textInput');
     const highlightedTextDiv = document.getElementById('highlightedText');
 
@@ -65,9 +79,14 @@ function displayResults(letterCounts, totalChars, totalLetters, vowelCount, cons
     totalLettersSpan.textContent = totalLetters;
     totalVowelsSpan.textContent = vowelCount;
     totalConsonantsSpan.textContent = consonantCount;
+    totalUppercaseSpan.textContent = uppercaseCount;
+    totalLowercaseSpan.textContent = lowercaseCount;
 
     // Vider les résultats précédents
     letterCountsDiv.innerHTML = '';
+
+    // Trouver le max d'occurrences pour calculer les couleurs
+    const maxCount = Math.max(...Object.values(letterCounts));
 
     // Créer une carte pour chaque lettre
     for (let letter in letterCounts) {
@@ -78,6 +97,13 @@ function displayResults(letterCounts, totalChars, totalLetters, vowelCount, cons
         // Ajouter une classe spéciale pour les lettres avec 0 occurrence
         if (count === 0) {
             letterItem.classList.add('zero');
+            letterItem.style.background = '#e0e0e0';
+            letterItem.style.color = '#999';
+        } else {
+            // Calculer la couleur en fonction du nombre d'occurrences
+            const intensity = count / maxCount;
+            const color = getColorByIntensity(intensity);
+            letterItem.style.background = color;
         }
 
         letterItem.innerHTML = `
@@ -127,28 +153,34 @@ function createPieChart(letterCounts) {
     }
 
     currentChart = new Chart(ctx, {
-        type: 'pie',
+        type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
                 data: data,
                 backgroundColor: colors,
                 borderColor: '#fff',
-                borderWidth: 2
+                borderWidth: 3,
+                hoverOffset: 15,
+                hoverBorderWidth: 4
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            cutout: '40%',
             plugins: {
                 legend: {
                     display: true,
                     position: 'bottom',
                     labels: {
-                        padding: 15,
+                        padding: 12,
                         font: {
-                            size: 12
+                            size: 13,
+                            weight: '500'
                         },
+                        usePointStyle: true,
+                        pointStyle: 'circle',
                         generateLabels: function(chart) {
                             const datasets = chart.data.datasets;
                             const labels = chart.data.labels;
@@ -156,22 +188,40 @@ function createPieChart(letterCounts) {
                                 text: `${label}: ${datasets[0].data[i]}`,
                                 fillStyle: datasets[0].backgroundColor[i],
                                 hidden: false,
-                                index: i
+                                index: i,
+                                fontColor: '#333'
                             }));
                         }
                     }
                 },
                 tooltip: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleFont: {
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    bodyFont: {
+                        size: 13
+                    },
+                    padding: 12,
+                    cornerRadius: 8,
+                    displayColors: true,
                     callbacks: {
                         label: function(context) {
                             const label = context.label || '';
                             const value = context.parsed || 0;
                             const total = context.dataset.data.reduce((a, b) => a + b, 0);
                             const percentage = ((value / total) * 100).toFixed(1);
-                            return `${label}: ${value} (${percentage}%)`;
+                            return ` ${value} occurrences (${percentage}%)`;
                         }
                     }
                 }
+            },
+            animation: {
+                animateRotate: true,
+                animateScale: true,
+                duration: 1000,
+                easing: 'easeInOutQuart'
             }
         }
     });
@@ -180,9 +230,38 @@ function createPieChart(letterCounts) {
 function generateColor(seed) {
     // Générer une couleur vive et agréable basée sur le code ASCII de la lettre
     const hue = (seed * 37) % 360;
-    const saturation = 70 + (seed % 20);
-    const lightness = 50 + (seed % 15);
+    const saturation = 75 + (seed % 15);
+    const lightness = 55 + (seed % 10);
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
+function getColorByIntensity(intensity) {
+    // Générer un gradient de couleurs du clair (peu d'occurrences) au foncé (beaucoup d'occurrences)
+    // On utilise un gradient violet-bleu cohérent avec le thème
+    const baseHue = 250; // Violet-bleu
+    const saturation = 60 + (intensity * 30); // De 60% à 90%
+    const lightness = 75 - (intensity * 45); // De 75% (clair) à 30% (foncé)
+
+    return `linear-gradient(135deg, hsl(${baseHue}, ${saturation}%, ${lightness}%) 0%, hsl(${baseHue + 10}, ${saturation + 5}%, ${lightness - 10}%) 100%)`;
+}
+
+function switchView(view) {
+    const chartView = document.getElementById('chartView');
+    const cardsView = document.getElementById('cardsView');
+    const chartBtn = document.getElementById('chartViewBtn');
+    const cardsBtn = document.getElementById('cardsViewBtn');
+
+    if (view === 'chart') {
+        chartView.classList.remove('hidden');
+        cardsView.classList.add('hidden');
+        chartBtn.classList.add('active');
+        cardsBtn.classList.remove('active');
+    } else {
+        chartView.classList.add('hidden');
+        cardsView.classList.remove('hidden');
+        chartBtn.classList.remove('active');
+        cardsBtn.classList.add('active');
+    }
 }
 
 function highlightLetter(letter) {

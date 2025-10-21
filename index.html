@@ -37,14 +37,31 @@
                     <span class="stat-label">Consonnes:</span>
                     <span id="totalConsonants" class="stat-value">0</span>
                 </div>
+                <div class="stat-item">
+                    <span class="stat-label">Majuscules:</span>
+                    <span id="totalUppercase" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Minuscules:</span>
+                    <span id="totalLowercase" class="stat-value">0</span>
+                </div>
             </div>
 
-            <div class="chart-container">
+            <div class="view-toggle">
+                <button id="chartViewBtn" class="toggle-btn active" onclick="switchView('chart')">
+                    <span class="icon">📊</span> Vue Camembert
+                </button>
+                <button id="cardsViewBtn" class="toggle-btn" onclick="switchView('cards')">
+                    <span class="icon">🔤</span> Vue Cartes
+                </button>
+            </div>
+
+            <div id="chartView" class="chart-container">
                 <h3>Répartition des lettres</h3>
                 <canvas id="letterChart"></canvas>
             </div>
 
-            <div id="letterCounts" class="letter-counts"></div>
+            <div id="cardsView" class="letter-counts hidden"></div>
         </div>
     </div>
 
