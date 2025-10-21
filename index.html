@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyseur de Texte - Compteur de Lettres</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Analyseur de Texte</h1>
+        <p class="subtitle">Collez votre texte pour compter les occurrences de chaque lettre</p>
+
+        <div class="input-section">
+            <textarea id="textInput" placeholder="Collez ou tapez votre texte ici..."></textarea>
+            <button id="analyzeBtn" onclick="analyzeText()">Analyser</button>
+            <button id="clearBtn" onclick="clearAll()">Effacer</button>
+        </div>
+
+        <div id="results" class="results hidden">
+            <h2>Résultats</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Total de caractères:</span>
+                    <span id="totalChars" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total de lettres:</span>
+                    <span id="totalLetters" class="stat-value">0</span>
+                </div>
+            </div>
+            <div id="letterCounts" class="letter-counts"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
