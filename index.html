@@ -13,6 +13,7 @@
 
         <div class="input-section">
             <textarea id="textInput" placeholder="Collez ou tapez votre texte ici..."></textarea>
+            <div id="highlightedText" class="highlighted-text hidden"></div>
             <button id="analyzeBtn" onclick="analyzeText()">Analyser</button>
             <button id="clearBtn" onclick="clearAll()">Effacer</button>
         </div>
@@ -28,11 +29,26 @@
                     <span class="stat-label">Total de lettres:</span>
                     <span id="totalLetters" class="stat-value">0</span>
                 </div>
+                <div class="stat-item">
+                    <span class="stat-label">Voyelles:</span>
+                    <span id="totalVowels" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Consonnes:</span>
+                    <span id="totalConsonants" class="stat-value">0</span>
+                </div>
             </div>
+
+            <div class="chart-container">
+                <h3>Répartition des lettres</h3>
+                <canvas id="letterChart"></canvas>
+            </div>
+
             <div id="letterCounts" class="letter-counts"></div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
